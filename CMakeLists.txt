@@ -1,20 +1,22 @@
 cmake_minimum_required(VERSION 3.11)
 
+include("${CMAKE_CURRENT_LIST_DIR}/packaging-helper.cmake")
+
 project(everest-log
     VERSION 0.1
     DESCRIPTION "EVerest logging library"
     LANGUAGES CXX C
 )
 
-find_package(everest-cmake 0.1 REQUIRED
-    PATHS ../everest-cmake
-)
+# find_package(everest-cmake 0.1 REQUIRED
+#     PATHS ../everest-cmake
+# )
 
 # options
 option(BUILD_BACKTRACE_SUPPORT "Build with backtrace support from libbacktrace" OFF)
 option(BUILD_TESTING "Run unit tests" OFF)
 option(BUILD_EXAMPLES "Build liblog example binaries." OFF)
-option(LOG_INSTALL "Install the library (shared data might be installed anyway)" ${EVC_MAIN_PROJECT})
+option(LOG_INSTALL "Install the library (shared data might be installed anyway)" ON)
 option(CMAKE_RUN_CLANG_TIDY "Run clang-tidy" OFF)
 
 
@@ -54,8 +56,8 @@ if (LOG_INSTALL)
         NAME everest-log
         NAMESPACE everest
         EXPORT log-targets
-        ADDITIONAL_CONTENT
-            "find_dependency(Boost COMPONENTS log_setup log)"
+        # ADDITIONAL_CONTENT
+        #     "find_dependency(Boost COMPONENTS log_setup log)"
     )
 endif()
 
@@ -111,10 +113,10 @@ if(CMAKE_RUN_CLANG_TIDY)
 endif()
 
 # build doxygen documentation if doxygen is available
-find_package(Doxygen)
-if(DOXYGEN_FOUND)
-    set( DOXYGEN_OUTPUT_DIRECTORY dist/docs )
-    doxygen_add_docs(doxygen-${PROJECT_NAME} include lib src)
-else()
-    message("Doxygen is needed to generate documentation")
-endif()
+# find_package(Doxygen)
+# if(DOXYGEN_FOUND)
+#     set( DOXYGEN_OUTPUT_DIRECTORY dist/docs )
+#     doxygen_add_docs(doxygen-${PROJECT_NAME} include lib src)
+# else()
+#     message("Doxygen is needed to generate documentation")
+# endif()
